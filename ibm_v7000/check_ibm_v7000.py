@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 # vim: set ts=2 sw=2 sts=2 expandtab:
 #
@@ -54,6 +53,18 @@ command_patterns = {'lsarray' : {
                                  'Message' : "Enclosure(s) ",  
                                 'OK_Message' : "All Enclosure Modules in proper State",                          
                                  },
+                    'lsenclosurebattery' : {
+                                 'Pattern' : 'ID : %s Serial Number: %s  ',
+                                 'values' : [0,7],    
+                                 'Message' : "Enclosure(s) Battery",  
+                                'OK_Message' : "All Enclosure Battery Online",                          
+                                 },
+                    'lsenclosurepsu' : {
+                                 'Pattern' : 'ID : %s PSU: %s  ',
+                                 'values' : [0,1],    
+                                 'Message' : "Enclosure(s) PSU ",  
+                                'OK_Message' : "All Enclosure PSU Online",                          
+                                 },
                     }
 def execute_command(ip,user,password,command):
     ssh = paramiko.SSHClient()
@@ -92,7 +103,7 @@ def lsanalyze(results,command):
                
                 
 def analyze(query,results):    
-    if query in('lsarray','lsdrive','lsvdisk','lsenclosure'):        
+    if query in('lsarray','lsdrive','lsvdisk','lsenclosure','lsenclosurebattery','lsenclosurepsu'):        
         rc,message = lsanalyze(results,query)
     else:
         pprint(results)
